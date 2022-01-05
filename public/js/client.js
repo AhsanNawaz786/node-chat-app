@@ -6,14 +6,21 @@ socket.on('connect',function(){
 
 socket.emit('createmessage',{
     from : "ahsan@gmail.com",
-    text : "hy from ahsan nawaz"
+    to : "saqib@gmail.com",
+    text : "happy birthday!"
 })
 
-socket.emit('NewEmail',{
-    from : "ahsannawaz111222@gmail.com",
-    to : "saqib@gmail.com",
-    message : "Hello, Happy Birthday!"
+
+socket.on('WelcomeMessage',function(message){
+    console.log("Welcome Message from server is: ",message);
 })
+
+// socket.emit('NewEmail',{
+//     from : "ahsannawaz111222@gmail.com",
+//     to : "saqib@gmail.com",
+//     message : "Hello, Happy Birthday!"
+// })
+
 
 //carrier email from server
 socket.on('emailfromserver',function(email){
@@ -28,6 +35,5 @@ socket.on('NewMessage',function(message){
 socket.on('disconnect',function(){
     console.log("Disconnected from server");
 })
-//////////
 
 

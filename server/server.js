@@ -15,8 +15,22 @@ const io = SocketIo(server);
 
 app.use(express.static(publicpath));
 
-io.on('connection',(socket)=>{
+io.on('connect',(socket)=>{
     console.log("New Connection has been created");
+
+
+    socket.emit('WelcomeMessage',{
+        from : "Admin",
+        text : "Welcome you have been joined to database",
+        createdAt : new Date().getTime()
+    })
+
+    socket.broadcast.emit('WelcomeMessage',{
+        from : "Admin",
+        text : "New User has been registered",
+        createdAt : new Date().getTime()
+    })
+
 
     // socket.emit('NewEmail',{
     //     from : 'mike@example.com',
@@ -37,9 +51,15 @@ io.on('connection',(socket)=>{
         Message : "Thanks for wishing me"
     })
 
-    //carrier socket
+    //carrier socket for new message
     socket.on('createmessage',function(message){
         console.log("create Message", message);
+        io.emit('newMessage',{
+            from : message.from,
+            text : message.text,
+            createdAt : new Date().getTime()
+
+        })
     })
 
      //carrier socket for email
